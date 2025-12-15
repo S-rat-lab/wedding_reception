@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Sharat & Sreekutty - Reception Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;600&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            overflow-x: hidden;
+            max-width: 100vw;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            max-width: 100vw;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+
+        /* --- Background Image --- */
+        .background-photo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: url('a.jpg') center 32% / cover no-repeat;
+            filter: blur(4px) brightness(1.00);
+            opacity: 0.45;
+        }
+
+        /* Soft overlay */
+        .background-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, rgba(255,182,193,0.15), rgba(0,0,0,0.4));
+        }
+
+        /* Fade elements */
+        .fade-element {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .fade-element.fade-in {
+            opacity: 1;
+        }
+
+        /* Falling petals */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            top: -50px;
+            animation: fall linear infinite;
+            transition: opacity 3s ease-out;
+        }
+
+        .petal.fade-out {
+            opacity: 0 !important;
+            animation: none !important;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0.574;
+            }
+            25% {
+                transform: translateY(25vh) translateX(20px) rotate(90deg);
+                opacity: 0.51;
+            }
+            50% {
+                transform: translateY(50vh) translateX(-10px) rotate(180deg);
+                opacity: 0.446;
+            }
+            75% {
+                transform: translateY(75vh) translateX(15px) rotate(270deg);
+                opacity: 0.383;
+            }
+            100% {
+                transform: translateY(100vh) translateX(-5px) rotate(360deg);
+                opacity: 0.191;
+            }
+        }
+
+        /* Content - MOBILE FIRST with Viewport Scaling */
+        .container {
+            max-width: min(900px, 100vw);
+            margin: clamp(20px, 5vh, 40px) auto !important;
+            text-align: center;
+            padding: clamp(15px, 5vw, 20px) !important;
+            width: 100%;
+        }
+
+        .names {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(64px, 12vw, 120px) !important;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff8fa3, #c77dae, #ffa07a, #dda0dd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0 25px;
+            text-shadow: 0 0 40px rgba(255,182,193,0.3);
+            opacity: 0;
+            min-height: clamp(200px, 30vh, 350px) !important;
+        }
+
+        .names.show {
+            opacity: 1;
+        }
+
+        .name-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            color: #ff8fa3;
+        }
+
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInLetter 0.1s forwards;
+            color: #ff8fa3 !important;
+            -webkit-text-fill-color: #ff8fa3 !important;
+        }
+
+        @keyframes fadeInLetter {
+            to { opacity: 1; }
+        }
+
+        .weds-text {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(42px, 8vw, 75px) !important;
+            color: #ffb6c1;
+            margin: 15px 0;
+            text-shadow: 0 0 15px rgba(255,182,193,0.8);
+            font-style: italic;
+            letter-spacing: 3px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .weds-text.show {
+            opacity: 1;
+        }
+
+        .subtext {
+            font-size: clamp(32px, 6vw, 54px) !important;
+            color: #ffd6e6;
+            margin: clamp(30px, 5vh, 50px) 0 !important;
+            font-style: italic;
+            text-shadow: 0 0 15px rgba(255,182,193,0.8);
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            line-height: 1.4 !important;
+        }
+
+        .subtext.fade-in {
+            opacity: 1;
+        }
+
+        .ceremony-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: clamp(35px, 6vh, 60px) 0 clamp(15px, 3vh, 30px) !important;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+        }
+
+        .ceremony-section.fade-in {
+            opacity: 1;
+        }
+
+        .section-ornament {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(36px, 7vw, 60px) !important;
+            color: #ffb6d5;
+            text-shadow: 0 0 20px rgba(255,182,193,0.7);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(36px, 7vw, 60px) !important;
+            color: #ffb6d5;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px rgba(255,182,193,0.7);
+        }
+
+        .detail {
+            font-size: clamp(28px, 5.5vw, 48px) !important;
+            color: #ffe5f1;
+            margin: clamp(10px, 2vh, 15px) 0 !important;
+            text-shadow: 0 0 10px rgba(255,182,193,0.6);
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            line-height: 1.5 !important;
+        }
+
+        .detail.fade-in {
+            opacity: 1;
+        }
+
+        .venue {
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            margin: 20px 0 !important;
+        }
+
+        .venue.fade-in {
+            opacity: 1;
+        }
+
+        /* LOCATION ICON + ANIMATED UNDERLINE */
+        .location-link {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 5px;
+            font-size: clamp(32px, 6vw, 52px) !important;
+            font-style: italic;
+            color: #ff9ab9;
+            text-decoration: none;
+            text-shadow: 0 0 15px rgba(255,140,160,0.8);
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .location-icon {
+            margin-right: 8px;
+            font-size: clamp(34px, 6.5vw, 56px) !important;
+            vertical-align: middle;
+            text-shadow: 0 0 12px rgba(255, 140, 160, 0.9);
+        }
+
+        .location-link .underline {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #ff9ab9, #dda0dd, #ffa07a);
+            box-shadow: 0 0 12px rgba(255,160,180,0.7);
+            border-radius: 4px;
+            transition: width 0.4s ease-in-out;
+        }
+
+        .location-link:hover .underline {
+            width: 100%;
+        }
+
+        /* Desktop Optimizations (Handled by clamp() max values) */
+        @media (min-width: 769px) {
+            .container {
+                padding: 25px;
+                margin: 80px auto !important;
+            }
+            /* Font sizes automatically scale to clamp() max values on desktop */
+        }
+
+        /* French Door Card Invitation */
+        .invitation-card {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 2000px;
+            cursor: pointer;
+        }
+
+        .invitation-card.opened {
+            pointer-events: none;
+        }
+
+        .door-container {
+            position: relative;
+            width: 95%;
+            max-width: 900px;
+            height: 90%;
+            max-height: none;
+        }
+
+        .door {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #2a1a1f 0%, #1a0e13 100%);
+            border: 3px solid;
+            border-image: linear-gradient(135deg, #ff8fa3, #c77dae, #dda0dd) 1;
+            box-shadow: 0 0 60px rgba(255,143,163,0.6), inset 0 0 40px rgba(255,182,193,0.1);
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backface-visibility: hidden;
+        }
+
+        .door-left {
+            left: 0;
+            transform-origin: left center;
+            border-right: 1.5px solid rgba(255,143,163,0.3);
+        }
+
+        .door-right {
+            right: 0;
+            transform-origin: right center;
+            border-left: 1.5px solid rgba(255,143,163,0.3);
+        }
+
+        .invitation-card.opened .door-left {
+            transform: rotateY(-120deg);
+        }
+
+        .invitation-card.opened .door-right {
+            transform: rotateY(120deg);
+        }
+
+        .door-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .door-ornament {
+            width: 80%;
+            height: 80%;
+            border: 2px solid rgba(255,143,163,0.4);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .door-ornament::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(255,143,163,0.2);
+            border-radius: 8px;
+        }
+
+        .monogram {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px !important;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff8fa3, #c77dae, #ffa07a, #dda0dd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,143,163,0.6);
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .ampersand {
+            font-family: 'Cinzel', serif;
+            font-size: 48px !important;
+            color: #ffb6c1;
+            margin: 0 15px;
+        }
+
+        .invitation-text {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Playfair Display', serif;
+            font-size: 42px !important;
+            color: #ff8fa3;
+            text-shadow: 0 0 30px rgba(255,143,163,0.8);
+            white-space: nowrap;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                text-shadow: 0 0 30px rgba(255,143,163,0.8);
+            }
+            50% {
+                text-shadow: 0 0 50px rgba(255,143,163,1);
+            }
+        }
+
+        /* Mobile adjustments for door card */
+        @media (max-width: 768px) {
+            .door-container {
+                width: 95%;
+                height: 85%;
+            }
+            .monogram {
+                font-size: clamp(48px, 10vw, 72px) !important;
+            }
+            .ampersand {
+                font-size: clamp(32px, 6vw, 48px) !important;
+            }
+            .invitation-text {
+                font-size: clamp(28px, 5.5vw, 42px) !important;
+            }
+        }
+
+        /* Extra small phones - Comprehensive fixes for missing content */
+        @media (max-width: 374px) {
+            .door-container {
+                width: 98%;
+                height: 80%;
+            }
+            .container {
+                padding: 10px !important;
+                margin: 10px auto !important;
+            }
+            .names {
+                font-size: clamp(48px, 10vw, 64px) !important;
+                min-height: 120px !important;
+                margin: 5px 0 15px !important;
+            }
+            .weds-text {
+                font-size: clamp(36px, 7vw, 42px) !important;
+                margin: 10px 0 !important;
+            }
+            .subtext {
+                font-size: clamp(24px, 5vw, 32px) !important;
+                margin: 20px 0 !important;
+            }
+            .ceremony-section {
+                margin: 25px 0 15px !important;
+                gap: 10px;
+            }
+            .section-title, .section-ornament {
+                font-size: clamp(28px, 6vw, 36px) !important;
+            }
+            .detail {
+                font-size: clamp(22px, 4.5vw, 28px) !important;
+                margin: 8px 0 !important;
+            }
+            .location-link {
+                font-size: clamp(24px, 5vw, 32px) !important;
+            }
+            .location-icon {
+                font-size: clamp(26px, 5.5vw, 34px) !important;
+            }
+        }
+
+        /* Small phones - Fine-tuning */
+        @media (min-width: 375px) and (max-width: 390px) {
+            .door-container {
+                width: 96%;
+                height: 83%;
+            }
+        }
+
+        /* Large phones - Fine-tuning */
+        @media (min-width: 391px) and (max-width: 428px) {
+            .door-container {
+                width: 95%;
+                height: 87%;
+            }
+        }
+
+        /* Short screens - Vertical compression (iPhone 8, SE, etc.) */
+        @media (max-height: 700px) {
+            .container {
+                margin: 15px auto !important;
+                padding: 12px !important;
+            }
+            .names {
+                font-size: clamp(52px, 10vw, 90px) !important;
+                min-height: 100px !important;
+                margin: 8px 0 18px !important;
+            }
+            .weds-text {
+                font-size: clamp(38px, 7vw, 58px) !important;
+                margin: 12px 0 !important;
+            }
+            .subtext {
+                font-size: clamp(28px, 5.5vw, 42px) !important;
+                margin: 18px 0 !important;
+            }
+            .ceremony-section {
+                margin: 22px 0 12px !important;
+            }
+            .section-title, .section-ornament {
+                font-size: clamp(32px, 6.5vw, 48px) !important;
+            }
+            .detail {
+                font-size: clamp(24px, 5vw, 38px) !important;
+                margin: 10px 0 !important;
+            }
+            .location-link {
+                font-size: clamp(28px, 5.5vw, 42px) !important;
+            }
+        }
+
+        /* Very short screens - Maximum compression */
+        @media (max-height: 600px) {
+            .container {
+                margin: 8px auto !important;
+                padding: 8px !important;
+            }
+            .names {
+                font-size: clamp(42px, 9vw, 72px) !important;
+                min-height: 80px !important;
+                margin: 5px 0 12px !important;
+            }
+            .weds-text {
+                font-size: clamp(32px, 6vw, 48px) !important;
+                margin: 8px 0 !important;
+            }
+            .subtext {
+                font-size: clamp(22px, 4.5vw, 32px) !important;
+                margin: 12px 0 !important;
+            }
+            .ceremony-section {
+                margin: 15px 0 8px !important;
+                gap: 8px;
+            }
+            .section-title, .section-ornament {
+                font-size: clamp(26px, 5.5vw, 38px) !important;
+            }
+            .detail {
+                font-size: clamp(20px, 4vw, 30px) !important;
+                margin: 6px 0 !important;
+                line-height: 1.3 !important;
+            }
+            .location-link {
+                font-size: clamp(22px, 4.5vw, 34px) !important;
+            }
+            .location-icon {
+                font-size: clamp(24px, 5vw, 36px) !important;
+            }
+        }
+
+        /* Touch target optimization for all mobile */
+        @media (max-width: 768px) {
+            .location-link {
+                padding: 10px;
+                margin: 10px 0;
+                display: inline-block;
+                /* Minimum 44x44px touch target */
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            /* Better spacing for readability */
+            .detail br { display: inline; }
+            .detail br::after { content: " "; }
+
+            /* Performance optimizations for mobile */
+            .petal {
+                will-change: transform, opacity;
+                transform: translate3d(0, 0, 0);
+            }
+
+            .background-photo {
+                /* Optimize background for mobile */
+                background-attachment: scroll;
+            }
+
+            /* Smoother animations on mobile */
+            * {
+                -webkit-tap-highlight-color: rgba(255, 182, 193, 0.2);
+            }
+
+            /* Prevent text selection on names during animation */
+            .names {
+                -webkit-user-select: none;
+                user-select: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="background-photo"></div>
+    <div class="background-overlay"></div>
+
+    <!-- French Door Invitation Card -->
+    <div class="invitation-card" id="invitation-card">
+        <div class="door-container">
+            <div class="door door-left">
+                <div class="door-content">
+                    <div class="door-ornament">
+                        <div class="monogram">Sharat</div>
+                    </div>
+                </div>
+            </div>
+            <div class="door door-right">
+                <div class="door-content">
+                    <div class="door-ornament">
+                        <div class="monogram">Sreekutty</div>
+                    </div>
+                </div>
+            </div>
+            <div class="invitation-text">Open Invitation</div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="names" id="names">
+            <span class="name-text" id="name1"></span>
+            <div class="weds-text">weds</div>
+            <span class="name-text" id="name2"></span>
+        </div>
+
+        <div class="subtext fade-element">Two hearts beat as one, our forever has begun</div>
+
+        <div class="ceremony-section fade-element">
+            <div class="section-ornament">✨</div>
+            <div class="section-title">Wedding Reception</div>
+            <div class="section-ornament">✨</div>
+        </div>
+
+        <div class="detail fade-element"><strong>Date:</strong> 31st January 2026</div>
+        <div class="detail fade-element"><strong>Time:</strong> 6:00 PM onwards</div>
+
+        <!-- LOCATION WITH ICON + UNDERLINE + MAP LINK -->
+        <div class="venue fade-element">
+            <a href="https://maps.app.goo.gl/UtfmHBeSKHrFnwUbA" target="_blank" class="location-link">
+                <span class="location-icon">📍</span>
+                Exclusive Club, OP Raman Rd, Civil Station, Kozhikode
+                <span class="underline"></span>
+            </a>
+        </div>
+
+        <div class="detail fade-element">
+            We joyfully invite you to witness and bless<br>
+            the beginning of our beautiful journey together.
+        </div>
+    </div>
+
+    <script>
+        // ===== ENTRANCE ANIMATION SEQUENCE =====
+
+        // Typewriter effect for names
+        function typeWriter(element, text, delay = 0, speed = 150) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    const letters = text.split('');
+                    letters.forEach((letter, index) => {
+                        setTimeout(() => {
+                            const span = document.createElement('span');
+                            span.className = 'letter';
+                            span.textContent = letter;
+                            span.style.animationDelay = '0s';
+                            element.appendChild(span);
+
+                            if (index === letters.length - 1) {
+                                setTimeout(resolve, 100);
+                            }
+                        }, index * speed);
+                    });
+                }, delay);
+            });
+        }
+
+        // Note: Wedding date is 25th January 2026
+
+        // Start the entrance sequence
+        async function startEntranceSequence() {
+            console.log('startEntranceSequence called');
+
+            const namesContainer = document.getElementById('names');
+            const name1 = document.getElementById('name1');
+            const wedsText = document.querySelector('.weds-text');
+            const name2 = document.getElementById('name2');
+
+            console.log('Elements found:', {namesContainer, name1, wedsText, name2});
+
+            // Step 1: Show names container and type first name
+            namesContainer.classList.add('show');
+            console.log('Typing name1: Sharat');
+            await typeWriter(name1, 'Sharat', 500, 150);
+
+            // Step 2: Show "weds" after first name
+            await new Promise(resolve => setTimeout(resolve, 300));
+            wedsText.classList.add('show');
+            console.log('Showing weds');
+
+            // Step 3: Wait a bit, then type second name
+            await new Promise(resolve => setTimeout(resolve, 400));
+            console.log('Typing name2: Sreekutty');
+            await typeWriter(name2, 'Sreekutty', 0, 150);
+
+            // Step 4: Start particles after names are complete
+            setTimeout(() => {
+                console.log('Starting particles');
+                startParticles();
+            }, 500);
+
+            // Step 5: Fade in all other content with staggered delays
+            const fadeElements = document.querySelectorAll('.fade-element');
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('fade-in');
+                }, 2000 + (index * 200));
+            });
+
+            console.log('Entrance sequence complete');
+        }
+
+        // Falling petals
+        let petalsStarted = false;
+        function createPetal() {
+            if (!petalsStarted) return;
+
+            const petal = document.createElement('div');
+            petal.className = 'petal';
+
+            // Selected flowers: Cherry Blossom, Hibiscus, Lotus, Four Leaf Clover
+            const petalSymbols = ['🌸', '🌺', '🪷', '🍀'];
+            petal.innerHTML = petalSymbols[Math.floor(Math.random() * petalSymbols.length)];
+
+            // Random position
+            petal.style.left = Math.random() * 100 + 'vw';
+
+            // Responsive sizes based on screen width
+            let sizes;
+            const screenWidth = window.innerWidth;
+
+            if (screenWidth < 375) {
+                // Very small phones - smallest petals
+                sizes = {
+                    'xs': 6,
+                    's': 9,
+                    'm': 12,
+                    'l': 17,
+                    'xl': 21,
+                    'xxl': 26
+                };
+            } else if (screenWidth < 769) {
+                // Standard phones - medium petals
+                sizes = {
+                    'xs': 8,
+                    's': 11,
+                    'm': 15,
+                    'l': 21,
+                    'xl': 26,
+                    'xxl': 32
+                };
+            } else {
+                // Desktop/tablets - largest petals
+                sizes = {
+                    'xs': 9,
+                    's': 14,
+                    'm': 18,
+                    'l': 24,
+                    'xl': 30,
+                    'xxl': 38
+                };
+            }
+
+            const sizeKeys = Object.keys(sizes);
+            const randomSize = sizes[sizeKeys[Math.floor(Math.random() * sizeKeys.length)]];
+            petal.style.fontSize = randomSize + 'px';
+
+            // Random colors in pink/purple tones
+            petal.style.color = ['#ffb6c1', '#dda0dd', '#ffa07a', '#ff8fa3', '#ffc0cb', '#ffb6d5'][Math.floor(Math.random() * 6)];
+
+            // Random animation duration and delay - slower falling
+            petal.style.animationDuration = (Math.random() * 10 + 15) + 's';
+            petal.style.animationDelay = Math.random() * 2 + 's';
+
+            document.body.appendChild(petal);
+
+            // Fade out before removal - longer, smoother fade
+            setTimeout(() => petal.classList.add('fade-out'), 20000);
+            setTimeout(() => petal.remove(), 23000);
+        }
+
+        function startParticles() {
+            petalsStarted = true;
+            setInterval(createPetal, 400);
+            for (let i = 0; i < 15; i++) setTimeout(createPetal, i * 200);
+        }
+
+        // French Door Card handler
+        let animationStarted = false;
+
+        function startExperience() {
+            if (animationStarted) return;
+            animationStarted = true;
+
+            // Open the doors
+            const invitationCard = document.getElementById('invitation-card');
+            invitationCard.classList.add('opened');
+
+            // Start music
+            const audio = document.getElementById('bg-music');
+            audio.volume = 0.5;
+            audio.play().catch(() => {
+                console.log('Music playback prevented by browser');
+            });
+
+            // Start entrance animation after doors open
+            setTimeout(() => {
+                console.log('Starting entrance animation...');
+                startEntranceSequence();
+            }, 800);
+
+            // Hide the card completely after doors open
+            setTimeout(() => {
+                invitationCard.style.opacity = '0';
+                invitationCard.style.transition = 'opacity 1s ease-out';
+            }, 1500);
+
+            setTimeout(() => {
+                invitationCard.style.display = 'none';
+            }, 2500);
+        }
+
+        // Attach click handler to invitation card
+        document.getElementById('invitation-card').addEventListener('click', startExperience);
+
+        // Start petals immediately on page load (they show behind the card)
+        window.addEventListener('load', () => {
+            startParticles();
+        });
+    </script>
+
+</body>
+</html>
+ 
